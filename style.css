@@ -1,0 +1,51 @@
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    flex: 1 0 100vh;
+    padding: 1rem;
+}
+
+html {
+    /* min-height: 100vh; */
+    height: 100%;
+}
+
+header {
+    flex: 0 1;
+}
+
+main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 5rem;
+    /* padding-inline: 1rem; */
+}
+
+form {
+    display: flex;
+    flex: 0 1;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+label {flex: 0 1;}
+
+input#text {
+    flex: 1 0;
+    width: 100%;
+}
+
+div#qrcode {
+    align-self: center;
+}
+
+@media screen and (min-aspect-ratio: 16/9) and (min-width: 600px) {
+    main {
+        flex-direction: row;
+    }
+    form {
+        flex-direction: column;
+    }
+}
