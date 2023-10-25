@@ -1,9 +1,25 @@
 var qrcode = new QRCode("qrcode");
 var msgbox = document.getElementById("text");
 
+function encodeUrl (message) {
+  if (!message) return '';
+  return '#' + encodeURIComponent(message);
+}
+
+function decodeUrl (hash) {
+  return decodeURIComponent(hash);  
+}
+
 function makeCode () {
-  qrcode.makeCode(msgbox.value);
-  window.history.pushState("state", "title", "#"+msgbox.value)
+  // const msg = msgbox.value;
+  let msg = msgbox.innerText;
+  if (msg === '\n') msg = '';
+  if (!msg) {
+    qrcode.clear();
+  } else {
+    qrcode.makeCode(msg);  
+  }
+  window.history.pushState("state", "title", encodeUrl(msg));
 }
 
 function ohchange (area, listener) { 
@@ -14,14 +30,24 @@ function ohchange (area, listener) {
   }
 }
 
-function urldecode(str) {
-   return decodeURIComponent((str+'').replace(/\+/g, '%20'));
-}
-
-ohchange(msgbox, makeCode);
-
-var hash = urldecode(window.location.hash.substring(1));
+var hash = window.location.hash.substring(1);
 if (hash) {
-  msgbox.value = hash;
+  msgbox.innerText = decodeUrl(hash);
   makeCode();
 }
+
+function debounce(callee, timeoutMs) {
+  return function perform(...args) {
+    let previousCall = this.lastCall
+
+    this.lastCall = Date.now()
+
+    if (previousCall && this.lastCall - previousCall <= timeoutMs) {
+      clearTimeout(this.lastCallTimer)
+    }
+
+    this.lastCallTimer = setTimeout(() => callee(...args), timeoutMs)
+  }
+}
+
+ohchange(msgbox, debounce(makeCode, 250));
