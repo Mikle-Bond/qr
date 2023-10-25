@@ -1,4 +1,4 @@
-var qrcode = new QRCode("qrcode");
+var qrcode = new QRCode("qrcode", {correctLevel: QRCode.CorrectLevel.M});
 var msgbox = document.getElementById("text");
 
 function encodeUrl (message) {
