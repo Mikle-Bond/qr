@@ -2,7 +2,7 @@ var qrcode = new QRCode("qrcode");
 var msgbox = document.getElementById("text");
 
 function encodeUrl (message) {
-  if (!message) return '';
+  if (!message) return window.location.pathname;
   return '#' + encodeURIComponent(message);
 }
 
@@ -12,14 +12,9 @@ function decodeUrl (hash) {
 
 function makeCode () {
   // const msg = msgbox.value;
-  let msg = msgbox.innerText;
-  if (msg === '\n') msg = '';
-  if (!msg) {
-    qrcode.clear();
-  } else {
-    qrcode.makeCode(msg);  
-  }
-  window.history.pushState("state", "title", encodeUrl(msg));
+  const msg = msgbox.innerText;
+  qrcode.makeCode(msg);
+  window.history.replaceState({}, "", encodeUrl(msg));
 }
 
 function ohchange (area, listener) { 
