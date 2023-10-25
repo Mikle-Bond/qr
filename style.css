@@ -11,34 +11,29 @@ body{
 }
 
 html {
-    /* min-height: 100vh; */
     height: 100%;
 }
 
 header {
     flex: 0 1;
 }
-
+footer {
+    margin-top:auto;
+}
 main {
-    /* display: flex; */
-    flex: 1;
-    /* flex-direction: column; */
+    flex: 0 auto;
     gap: 1rem;
     display: grid;
-    grid-template:
-        "a" auto
-        "b" var(--qr-size)
-        "c" 1fr;
-    grid-template-columns: 100%;
     align-items: stretch;
+    grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
 }
 
 .form {
     display: flex;
-    /* flex: 0 1; */
     gap: 1rem;
     padding: 2rem;
     flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
 label {flex: 0 1;}
@@ -54,7 +49,7 @@ textarea {
 #text {
     flex: 1 0;
     min-width: min(25ch, 100%);
-    max-height: 10em;
+    max-height: 20em;
     min-height: max-content;
     padding: 0.5ch;
 }
@@ -68,25 +63,9 @@ textarea {
 }
 
 #qrcode > * {
-    /* max-width: var(--qr-size); */
-    width: 100%;
-    /* height: auto; */
+    max-width: 100%;
 }
 
-@media screen and (min-width: 600px) and (min-aspect-ratio: 4/3) {
-    main {
-        flex-direction: row;
-        grid-template:
-            "a b c" 100% / 1fr var(--qr-size) 2fr;
-    }
-    .form {
-        flex-direction: column;
-    }
-    #text {
-        max-height: 100%;
-        max-width: 29ch;
-    }
-}
 /* kindly stolen from https://css-tricks.com/auto-growing-inputs-textareas */
 .textarea {
     display: block;
