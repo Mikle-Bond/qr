@@ -75,3 +75,16 @@ textarea {
     white-space: pre;
     border: grey 1px solid;
 }
+#text:empty:before {
+    content: "Enter your mesage";
+    color: grey;
+}
+#fake {
+    display: none;
+}
+
+#qrcode:has(canvas:not([height])):before,
+#qrcode:empty
+{
+    content: url("fakeQR.gif");
+}

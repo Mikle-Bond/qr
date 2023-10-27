@@ -1,5 +1,6 @@
-var qrcode = new QRCode("qrcode", {correctLevel: QRCode.CorrectLevel.M});
-var msgbox = document.getElementById("text");
+var qrcode = null;
+const msgbox = document.getElementById("text");
+const options = {correctLevel: QRCode.CorrectLevel.M};
 
 function encodeUrl (message) {
   if (!message) return window.location.pathname;
@@ -13,7 +14,13 @@ function decodeUrl (hash) {
 function makeCode () {
   // const msg = msgbox.value;
   const msg = msgbox.innerText;
-  qrcode.makeCode(msg);
+  if (msg) {
+    if (!qrcode) qrcode = new QRCode("qrcode", options);
+    qrcode.makeCode(msg);
+  } else {
+    qrcode.clear();
+    qrcode = null;
+  }
   window.history.replaceState({}, "", encodeUrl(msg));
 }
 
