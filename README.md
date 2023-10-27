@@ -28,19 +28,19 @@ services:
         build: https://github.com/Mikle-Bond/qr.git
 
         environment:
-	    <<: *env
+            <<: *env
             PORT: 8080
             # Other useful options are listed here
-	    # at https://github.com/halverneus/static-file-server
+            # at https://github.com/halverneus/static-file-server
 
-	# example of proxying using the caddy-docker-proxy
+        # example of proxying using the caddy-docker-proxy
         labels: 
             caddy: qr.${BASE_DOMAIN}
             caddy.reverse_proxy: http://qr:8080
 
-	# example of proxying only the port
-	ports:
-	    - "80:8080/tcp"
+        # example of proxying only the port
+        ports:
+            - "80:8080/tcp"
 ```
 
 Example contents of .env file
