@@ -1,12 +1,25 @@
 :root {
     --qr-size: 300px;
+    --fg: #111111;
+    --bg: #FFFFFF;
 }
-
 body{
+    background-color: var(--bg);
+    color: var(--fg);
     display: flex;
     flex-direction: column;
     min-height: 100%;
     padding: 1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --fg: #CCCCCC;
+        --bg: #000000;
+    }
+    #qrcode {
+        filter: invert(1);
+    }
 }
 
 html {
