@@ -1,0 +1,169 @@
+# vim: sts=2:sw=2:ts=2:et:autoindent
+- type: "!DOCTYPE"
+  html: true
+- type: html
+  lang: en
+  items:
+  - type: head
+    items:
+    -
+      type: meta
+      name: "viewport"
+      content: width=device-width,initial-scale=1
+    -
+      type: meta
+      name: "description"
+      content: ""
+    -
+      type: link
+      rel: manifest
+      href: manifest.json
+    -
+      type: link
+      href: https://unpkg.com/simpledotcss/simple.min.css
+      rel: stylesheet
+    -
+      type: link
+      rel: stylesheet
+      extraArgs:
+        type: text/css
+      href: style.css
+    -
+      type: link
+      rel: apple-touch-icon-precomposed
+      sizes: "57x57"
+      href: https://qr.photon.wdk.dn.ua/apple-touch-icon-57x57.png
+    -
+      type: link
+      rel: apple-touch-icon-precomposed
+      sizes: "114x114"
+      href: https://qr.photon.wdk.dn.ua/apple-touch-icon-114x114.png
+    -
+      type: link
+      rel: apple-touch-icon-precomposed
+      sizes: "72x72"
+      href: https://qr.photon.wdk.dn.ua/apple-touch-icon-72x72.png
+    -
+      type: link
+      rel: apple-touch-icon-precomposed
+      sizes: "144x144"
+      href: https://qr.photon.wdk.dn.ua/apple-touch-icon-144x144.png
+    -
+      type: link
+      rel: apple-touch-icon-precomposed
+      sizes: "120x120"
+      href: https://qr.photon.wdk.dn.ua/apple-touch-icon-120x120.png
+    -
+      type: link
+      rel: apple-touch-icon-precomposed
+      sizes: "152x152"
+      href: https://qr.photon.wdk.dn.ua/apple-touch-icon-152x152.png
+    -
+      type: link
+      rel: icon
+      href: https://qr.photon.wdk.dn.ua/favicon-32x32.png
+      sizes: "32x32"
+      extraArgs:
+        type: image/png
+    -
+      type: link
+      rel: icon
+      href: https://qr.photon.wdk.dn.ua/favicon-16x16.png
+      sizes: "16x16"
+      extraArgs:
+        type: image/png
+    -
+      type: meta
+      name: application-name
+      content: QR Code Generator
+    -
+      type: meta
+      name: "msapplication-TileColor"
+      content: "#FFFFFF"
+    -
+      type: meta
+      name: msapplication-TileImage
+      content: https://qr.photon.wdk.dn.ua/mstile-144x144.png
+
+    -
+      type: script
+      extraArgs:
+        type: text/javascript
+      items: |
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/sw.js', {
+                    scope: '.'
+                });
+            });
+        }
+  -
+    type: body
+    items:
+    -
+      type: header
+      items:
+        type: h1
+        items: Hello, World!
+    -
+      type: main
+      items:
+      -
+        type: div
+        class: form
+        items:
+        -
+          type: label
+          for: text
+          items: "Message:"
+        -
+          type: span
+          id: text
+          class: textarea
+          role: textbox
+          contenteditable: true
+          autofocus: true
+          items: []
+      -
+        type: div
+        id: qrcode
+        items: []
+      -
+        type: div
+        class: padding
+        items: []
+    - 
+      type: footer
+      items:
+      -
+        type: p
+        items:
+        - Webpage by
+        -
+          type: a
+          href: https://github.com/Mikle-Bond/qr
+          items: Mikle Bond
+        - .
+      -
+        type: p
+        items:
+        - QR generation library by
+        -
+          type: a
+          href: https://davidshimjs.github.io/qrcodejs/
+          items: davidshimjs
+        - and
+        -
+          type: a
+          href: https://github.com/ushelp/EasyQRCodeJS
+          items: EasyProject
+        - .
+    -
+      type: script
+      src: https://cdn.jsdelivr.net/gh/ushelp/EasyQRCodeJS@master/dist/easy.qrcode.min.js
+      items: []
+    -
+      type: script
+      src: app.js
+      items: []
+
