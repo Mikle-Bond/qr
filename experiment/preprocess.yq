@@ -1,0 +1,25 @@
+.
+| explode(.) 
+| (.. | select(type=="!prejoin")) |= join("")
+| (.. | select(type == "!foreach")) |= (
+  .from as $f
+  | .args
+  | map(
+    {
+      "from": $f,
+      "args": .
+    }
+    | . tag= "!expandme"
+  )
+)
+| (.. | select(type == "!expandme")) |= (
+  .args as $_
+  | .from
+  | (.. | select(type == "!arg")) |= $_[.]
+  | (.. | select(type == "!argx")) |= eval(.)
+)
+| (.. | select(type=="!join")) |= join("")
+| (.. | select(type=="!flatten")) |= flatten(1)
+| (.. | select(type=="!join" or type=="!arg")) tag= ""
+| with_entries(select(.key | test("^x-.+") | not))
+| .[]

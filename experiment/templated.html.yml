@@ -1,0 +1,183 @@
+# vim: sts=2:sw=2:ts=2:et:autoindent
+
+x-vars:
+  - &hostname qr.photon.wdk.dn.ua
+
+x-templates:
+  - &link-apple
+    tag: link
+    rel: apple-touch-icon-precomposed
+    sizes: !arg 0
+    href: !join
+      - https://
+      - *hostname
+      - "/apple-touch-icon-"
+      - !arg 0
+      - .png
+
+  - &link-icon
+    tag: link
+    rel: icon
+    href: !join
+      - 
+        https://
+      - *hostname
+      - "/favicon-"
+      - !arg 0
+      - .png
+    sizes: !arg 0
+    type: image/png
+
+  - &a
+    tag: a
+    items: !argx $_ | to_entries | .[0].key
+    href: !argx $_ | to_entries | .[0].value
+
+  - &link-style
+    tag: link
+    rel: stylesheet
+    type: text/css
+    href: !arg 0
+
+x-links:
+  - &mikle_bond !expandme
+    from: *a
+    args:
+      "Mikle Bond": https://github.com/Mikle-Bond/qr
+
+  - &davidshimjs !expandme
+    from: *a
+    args:
+      davidshimjs: https://davidshimjs.github.io/qrcodejs/
+
+  - &easyproject !expandme
+    from: *a
+    args:
+      EasyProject: https://github.com/ushelp/EasyQRCodeJS
+
+header:
+  tag: "!DOCTYPE"
+  html: true
+
+html:
+  tag: html
+  lang: en
+  items:
+
+  - 
+    tag: head
+    items: !flatten
+    - !foreach
+      from:
+        tag: meta
+        name: !argx $_ | to_entries | .[0].key
+        content: !argx $_ | to_entries | .[0].value
+      args:
+        - viewport: width=device-width,initial-scale=1
+        - description: ""
+        - application-name: QR Code Generator
+        - msapplication-TileColor: "#FFFFFF"
+        - msapplication-TileImage: !prejoin
+            - https://
+            - *hostname
+            - /mstile-144x144.png
+    - 
+      tag: link
+      rel: manifest
+      href: manifest.json
+
+    - !foreach
+      from: *link-style
+      args:
+        - - style.css
+        - - https://unpkg.com/simpledotcss/simple.min.css
+
+    - !foreach
+      from: *link-apple
+      args: 
+        - - 57x57
+        - - 114x114
+        - - 72x72
+        - - 144x144
+        - - 120x120
+        - - 152x152
+
+    - !foreach
+      from: *link-icon
+      args: 
+        - - 32x32
+        - - 16x16
+
+    - 
+      tag: script
+      type: text/javascript
+      items: |
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/sw.js', {
+                    scope: '.'
+                });
+            });
+        }
+  - 
+    tag: body
+    items:
+    - 
+      tag: header
+      items:
+        tag: h1
+        items: Hello, World!
+    - 
+      tag: main
+      items:
+      - 
+        tag: div
+        class: form
+        items:
+        - 
+          tag: label
+          for: text
+          items: "Message:"
+        - 
+          tag: span
+          id: text
+          class: textarea
+          role: textbox
+          contenteditable: true
+          autofocus: true
+          items: []
+      - 
+        tag: div
+        id: qrcode
+        items: []
+      - 
+        tag: div
+        class: padding
+        items: []
+    - 
+      tag: footer
+      items:
+      - 
+        tag: p
+        items:
+        - Webpage by
+        - *mikle_bond
+        - .
+      - 
+        tag: p
+        items:
+        - QR generation library by
+        - *davidshimjs
+        - and
+        - *easyproject
+        - .
+    - 
+      tag: script
+      src: https://cdn.jsdelivr.net/gh/ushelp/EasyQRCodeJS@master/dist/easy.qrcode.min.js
+      items: []
+    - 
+      tag: script
+      src: app.js
+      items: []
+
+
